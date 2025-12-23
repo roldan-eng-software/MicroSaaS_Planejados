@@ -661,9 +661,9 @@ docker-compose down
 
 ### 5.2 Acessar serviços
 
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:8000/api
-- Docs Swagger: http://localhost:8000/docs
+- Frontend: <http://localhost:5173>
+- Backend API: <http://localhost:8000/api>
+- Docs Swagger: <http://localhost:8000/docs>
 - PostgreSQL: localhost:5432
 
 ---
@@ -671,6 +671,7 @@ docker-compose down
 ## Checklist Completo de Implementação
 
 ### ✅ Semana 1
+
 - [ ] Criar repositório GitHub
 - [ ] Setup FastAPI + estrutura de pastas
 - [ ] Setup React + Vite
@@ -680,6 +681,7 @@ docker-compose down
 - [ ] Rodar tudo localmente com Docker
 
 ### ✅ Semana 2
+
 - [ ] Implementar autenticação JWT
 - [ ] Criar Repository pattern para Clientes
 - [ ] Criar Service + Validações de negócio
@@ -687,6 +689,7 @@ docker-compose down
 - [ ] Testar com Postman/Thunder Client
 
 ### ✅ Semana 3
+
 - [ ] Criar front-end com React
 - [ ] Implementar listagem de clientes
 - [ ] Criar formulário de novo cliente
@@ -694,6 +697,7 @@ docker-compose down
 - [ ] Testar fluxo completo
 
 ### ✅ Semana 4
+
 - [ ] Repetir para Pedidos
 - [ ] Implementar Pagamentos
 - [ ] Criar dashboard financeiro
