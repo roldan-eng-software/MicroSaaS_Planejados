@@ -11,15 +11,22 @@ services:
     environment:
       # Exemplo de URL do banco
       DATABASE_URL: postgresql+psycopg://app_user:app_password@db:5432/app_db
-    volumes:
-      - ./backend:/app
-    command: sh -c "alembic upgrade head || echo 'Primeira execução, sem migrations' && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    # Bind mount removido temporariamente para testar a imagem limpa do backend
+    # volumes:
+    #   - ./backend:/app
+    command: sh -c "alembic upgrade head || echo 'Primeira execução, sem migrations'; exec uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "8000:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; urllib.request.urlopen('http://localhost:8000/health', timeout=2)\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     restart: unless-stopped
 
   frontend:
@@ -33,12 +40,19 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    # Aguarda o arquivo /app/package.json (evita npm ENOENT quando o bind-mount ainda não está pronto), instala dependências e inicia o dev server
     command: >
-      sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+      sh -c "for i in \$(seq 1 30); do [ -f /app/package.json ] && break || sleep 1; done; npm install && npm run dev -- --host 0.0.0.0 --port 5173"
     depends_on:
       - backend
     ports:
       - "5173:5173"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c "import urllib.request,sys; urllib.request.urlopen('http://localhost:5173', timeout=2)" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     restart: unless-stopped
 
   db:
