@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  backend:
+    # Substitua 'seu-usuario' pelo seu usuário do GitHub
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/microsaas-backend:latest
+    container_name: microsaas-backend
+    env_file:
+      - .env
+    environment:
+      ENVIRONMENT: production
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    # O comando de start deve ser definido no Dockerfile (ex: gunicorn/uvicorn)
+
+  frontend:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/microsaas-frontend:latest
+    container_name: microsaas-frontend
+    restart: always
+    ports:
+      - "80:5173" # Mapeia a porta 80 do host para a porta do container
+    depends_on:
+      - backend
+
+  celery_worker:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/microsaas-backend:latest
+    container_name: microsaas-celery
+    env_file:
+      - .env
+    command: celery -A app.core.celery_app.celery_app worker --loglevel=info
+    depends_on:
+      - backend
+      - redis
+      - db
+    restart: always
+
+  db:
+    image: postgres:15
+    container_name: microsaas-db
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: microsaas-redis
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  db_data:
+  redis_data:

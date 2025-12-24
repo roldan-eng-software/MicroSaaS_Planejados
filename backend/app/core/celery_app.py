@@ -1,5 +1,6 @@
 import os
 from celery import Celery
+from app.core.sentry import init_sentry
 
 broker_url = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 result_backend = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
@@ -18,3 +19,6 @@ celery_app.conf.update(
     timezone="America/Sao_Paulo",
     enable_utc=True,
 )
+
+# Inicializa o Sentry para o processo do Worker
+init_sentry()

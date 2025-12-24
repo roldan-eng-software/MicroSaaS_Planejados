@@ -101,11 +101,13 @@ Este documento serve como um guia de tarefas para o desenvolvimento do projeto, 
 ### ☁️ **Fase 6: Deploy e Produção**
 
 - [ ] **Infraestrutura:**
-    - [ ] Finalizar e testar `docker-compose.yml` para produção.
-    - [ ] Configurar CI/CD com GitHub Actions para build e deploy automáticos.
+    - [x] Finalizar e testar `docker-compose.yml` para produção.
+    - [x] Configurar CI/CD com GitHub Actions para build e deploy automáticos.
 - [ ] **Monitoramento:**
-    - [ ] Integrar Sentry para error tracking.
-    - [ ] Configurar logging estruturado em produção.
+    - [x] Integrar Sentry para error tracking.
+    - [x] Configurar logging estruturado em produção.
 - [ ] **Segurança:**
-    - [ ] Revisar todas as configurações (CORS, senhas, chaves secretas).
-    - [ ] Fazer um teste de penetração básico.
+    - [x] Revisar todas as configurações (CORS, senhas, chaves secretas).
+    - [x] Fazer um teste de penetração básico (Validado).
+    - [x] Implementar Rate Limiting (proteção contra força bruta).
+    - [x] Implementar Middleware de Headers de Segurança.
