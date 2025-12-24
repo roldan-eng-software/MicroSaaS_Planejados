@@ -8,6 +8,7 @@ from app.models.tenant import Tenant
 from app.models.user import User
 from app.models.cliente import Cliente
 from app.models.pedido import Pedido
+from app.models.compromisso import Compromisso
 
 config = context.config
 

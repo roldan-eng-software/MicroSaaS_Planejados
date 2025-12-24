@@ -77,13 +77,13 @@ Este documento serve como um guia de tarefas para o desenvolvimento do projeto, 
 ### 📅 **Fase 4: Agenda e Compromissos**
 
 - [ ] **Backend:**
-    - [ ] Criar modelo e schema para Compromissos (visitas, entregas).
-    - [ ] Implementar `compromisso_repo.py` e `compromisso_service.py`.
-    - [ ] Implementar endpoints em `routes/compromissos.py`.
+    - [x] Criar modelo e schema para Compromissos (visitas, entregas).
+    - [x] Implementar `compromisso_repo.py` e `compromisso_service.py`.
+    - [x] Implementar endpoints em `routes/compromissos.py`.
 - [ ] **Frontend:**
-    - [ ] Criar serviço e hook `useCompromissos.ts`.
-    - [ ] Integrar o `react-big-calendar` na página/aba de agenda.
-    - [ ] Criar formulário para agendar novos compromissos.
+    - [x] Criar serviço e hook `useCompromissos.ts`.
+    - [x] Integrar o `react-big-calendar` na página/aba de agenda.
+    - [x] Criar formulário para agendar novos compromissos.
 
 ---
 
