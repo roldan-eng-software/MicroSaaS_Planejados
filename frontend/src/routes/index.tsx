@@ -31,6 +31,14 @@ const router = createBrowserRouter([
         path: 'clientes',
         element: <ClientesPage />,
       },
+      {
+        path: 'pedidos',
+        element: <PedidosPage />,
+      },
+      {
+        path: 'pedidos/:id',
+        element: <PedidoDetailPage />,
+      },
       // Outras rotas protegidas virão aqui
     ],
   },

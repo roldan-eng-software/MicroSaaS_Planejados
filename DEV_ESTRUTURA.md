@@ -42,19 +42,19 @@ Este documento serve como um guia de tarefas para o desenvolvimento do projeto, 
 
 ---
 
-### 📝 **Fase 2: CRUD de Pedidos e Orçamentos**
+### ✅ **Fase 2: CRUD de Pedidos e Orçamentos (Concluído)**
 
-- [ ] **Backend:**
-    - [ ] Criar/Revisar schemas para Pedido e Itens do Pedido.
-    - [ ] Implementar `pedido_repo.py`.
-    - [ ] Implementar `pedido_service.py` (lógica para cálculo de totais, etc.).
-    - [ ] Implementar endpoints em `routes/pedidos.py`.
+- [x] **Backend:**
+    - [x] Criar/Revisar schemas para Pedido e Itens do Pedido.
+    - [x] Implementar `pedido_repo.py`.
+    - [x] Implementar `pedido_service.py` (lógica para cálculo de totais, etc.).
+    - [x] Implementar endpoints em `routes/pedidos.py`.
     - [ ] Escrever testes para a API de pedidos.
-- [ ] **Frontend:**
-    - [ ] Criar serviço e hook `usePedidos.ts`.
-    - [ ] Implementar `PedidoList.tsx` com filtros por status.
-    - [ ] Implementar `PedidoForm.tsx` para criar e editar pedidos e seus itens.
-    - [ ] Desenvolver a `PedidoDetailPage.tsx` com abas (Detalhes, Financeiro, Agenda).
+- [x] **Frontend:**
+    - [x] Criar serviço e hook `usePedidos.ts`.
+    - [x] Implementar `PedidoList.tsx` com filtros por status.
+    - [x] Implementar `PedidoForm.tsx` para criar e editar pedidos e seus itens.
+    - [x] Desenvolver a `PedidoDetailPage.tsx` com abas (Detalhes, Financeiro, Agenda).
 
 ---
 

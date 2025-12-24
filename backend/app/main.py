@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import clientes, auth
+from app.routes import clientes, auth, pedidos
 from app.middleware.cors import setup_cors
 from app.middleware.auth import auth_middleware
 from app.middleware.error_handler import http_error_handler
@@ -15,6 +15,7 @@ app.middleware("http")(auth_middleware)
 # Routers
 app.include_router(auth.router, prefix="/api/auth")
 app.include_router(clientes.router, prefix="/api")
+app.include_router(pedidos.router, prefix="/api")
 
 @app.get("/health", tags=["Health"])
 async def health_check():

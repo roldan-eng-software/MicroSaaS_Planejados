@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Enum, Date, DateTime, Numeric, ForeignKey, Integer, UUID
+from sqlalchemy.orm import relationship
 from .base import BaseModel
 
 class Pedido(BaseModel):
@@ -24,3 +25,6 @@ class Pedido(BaseModel):
     valor_subtotal = Column(Numeric(12, 2), default=0)
     valor_desconto = Column(Numeric(12, 2), default=0)
     valor_total = Column(Numeric(12, 2), default=0)
+
+    # Relação com ItemPedido
+    itens = relationship("ItemPedido", back_populates="pedido", cascade="all, delete-orphan")
