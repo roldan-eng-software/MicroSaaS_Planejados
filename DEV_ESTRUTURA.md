@@ -58,18 +58,19 @@ Este documento serve como um guia de tarefas para o desenvolvimento do projeto, 
 
 ---
 
-### 💰 **Fase 3: Financeiro e Pagamentos**
+### ✅ **Fase 3: Financeiro e Pagamentos (Concluído)**
 
-- [ ] **Backend:**
-    - [ ] Criar modelos e schemas para Pagamentos e Parcelas.
-    - [ ] Implementar `pagamento_repo.py`.
-    - [ ] Implementar `pagamento_service.py` (lógica para gerar parcelas, registrar pagamentos).
-    - [ ] Implementar endpoints em `routes/pagamentos.py`.
-- [ ] **Frontend:**
-    - [ ] Criar serviço e hook `usePagamentos.ts`.
-    - [ ] Desenvolver componentes para listar parcelas (`ParcelaList.tsx`).
-    - [ ] Criar modal/formulário para registrar um pagamento de parcela.
-    - [ ] Montar a aba "Financeiro" na página de detalhes do pedido.
+- [x] **Backend:**
+    - [x] Criar modelos e schemas para Pagamentos e Parcelas.
+    - [x] Implementar `pagamento_repo.py`.
+    - [x] Implementar `pagamento_service.py` (lógica para gerar parcelas, registrar pagamentos).
+    - [x] Implementar endpoints em `routes/pagamentos.py`.
+    - [ ] Escrever testes para a API de pagamentos.
+- [x] **Frontend:**
+    - [x] Criar serviço e hook `usePagamentos.ts`.
+    - [x] Desenvolver componentes para listar parcelas (`ParcelaList.tsx`).
+    - [x] Criar modal/formulário para registrar um pagamento de parcela.
+    - [x] Montar a aba "Financeiro" na página de detalhes do pedido.
 
 ---
 

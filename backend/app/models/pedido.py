@@ -28,3 +28,7 @@ class Pedido(BaseModel):
 
     # Relação com ItemPedido
     itens = relationship("ItemPedido", back_populates="pedido", cascade="all, delete-orphan")
+    # Relação com Pagamento
+    pagamentos = relationship("Pagamento", back_populates="pedido", cascade="all, delete-orphan")
+    # Relação com Parcela
+    parcelas = relationship("Parcela", back_populates="pedido", cascade="all, delete-orphan")
