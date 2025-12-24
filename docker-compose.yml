@@ -13,7 +13,7 @@ services:
       DATABASE_URL: postgresql+psycopg://app_user:app_password@db:5432/app_db
     volumes:
       - ./backend:/app
-    command: sh -c "alembic upgrade head || echo 'Primeira execução, sem migrations' && uvicorn main:app --host 0.0.0.0 --port 8000"
+    command: sh -c "alembic upgrade head || echo 'Primeira execução, sem migrations' && uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
     depends_on:
       db:
@@ -32,6 +32,7 @@ services:
       VITE_API_URL: "http://localhost:8000/api"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     command: >
       sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
     depends_on:
