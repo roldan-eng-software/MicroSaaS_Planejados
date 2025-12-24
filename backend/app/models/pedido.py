@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Enum, Date, DateTime, Numeric, ForeignKey
+from sqlalchemy import Column, String, Enum, Date, DateTime, Numeric, ForeignKey, Integer, UUID
 from .base import BaseModel
 
 class Pedido(BaseModel):

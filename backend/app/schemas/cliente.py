@@ -2,10 +2,15 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from uuid import UUID
 from datetime import datetime
+from enum import Enum
+
+class TipoCliente(str, Enum):
+    pessoa_fisica = 'PF'
+    pessoa_juridica = 'PJ'
 
 class ClienteBase(BaseModel):
     nome: str
-    tipo: str  # 'PF' ou 'PJ'
+    tipo: TipoCliente
     cpf_cnpj: str
     email: Optional[EmailStr] = None
     telefone_ddd: Optional[str] = None

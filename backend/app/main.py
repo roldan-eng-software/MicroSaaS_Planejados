@@ -1,27 +1,22 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app.routes import clientes, pedidos, pagamentos
+from app.routes import clientes, auth
+from app.middleware.cors import setup_cors
 from app.middleware.auth import auth_middleware
+from app.middleware.error_handler import http_error_handler
+from starlette.exceptions import ExceptionMiddleware
 
 app = FastAPI(title="MicroSaaS Marcenaria API", version="1.0.0")
 
-# CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://seu-dominio.com"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Middleware custom
+# Middlewares
+setup_cors(app)
+app.add_middleware(ExceptionMiddleware, handlers={500: http_error_handler})
 app.middleware("http")(auth_middleware)
 
 # Routers
+app.include_router(auth.router, prefix="/api/auth")
 app.include_router(clientes.router, prefix="/api")
-app.include_router(pedidos.router, prefix="/api")
-app.include_router(pagamentos.router, prefix="/api")
 
-@app.get("/health")
+@app.get("/health", tags=["Health"])
 async def health_check():
+    """Verifica se a API está online."""
     return {"status": "ok"}

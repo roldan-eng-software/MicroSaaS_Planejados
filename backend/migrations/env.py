@@ -2,14 +2,20 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
-from app.models.base import Base  # seu Base
+# Import all the models, so that Base has them registered
+from app.models.base import Base
+from app.models.tenant import Tenant
+from app.models.user import User
+from app.models.cliente import Cliente
+from app.models.pedido import Pedido
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-target_metadata = Base.metadata  # ← aqui é o ponto chave
+# Set the metadata for Alembic
+target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
     url = config.get_main_option("sqlalchemy.url")
