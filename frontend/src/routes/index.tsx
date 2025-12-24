@@ -3,17 +3,8 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import LoginPage from '@/pages/auth/LoginPage';
 import RegisterPage from '@/pages/auth/RegisterPage';
 import DashboardPage from '@/pages/dashboard/DashboardPage';
-import { useAuth } from '@/hooks/useAuth';
-import { ReactNode } from 'react';
-
-// Componente para proteger rotas
-const PrivateRoute = ({ children }: { children: ReactNode }) => {
-  const { isAuthenticated, loading } = useAuth();
-  if (loading) {
-    return <div>Carregando...</div>; // Ou um spinner
-  }
-  return isAuthenticated ? children : <Navigate to="/login" />;
-};
+import ClientesPage from '@/pages/clientes/ClientesPage';
+import { PrivateRoutes } from '@/components/Layout/PrivateRoutes';
 
 const router = createBrowserRouter([
   {
@@ -25,16 +16,28 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: '/dashboard',
-    element: (
-      <PrivateRoute>
-        <DashboardPage />
-      </PrivateRoute>
-    ),
-  },
-  {
     path: '/',
-    element: <Navigate to="/dashboard" />,
+    element: <PrivateRoutes />,
+    children: [
+      {
+        index: true, // Rota padrão quando acessa '/' dentro de PrivateRoutes
+        element: <Navigate to="/dashboard" replace />,
+      },
+      {
+        path: 'dashboard',
+        element: <DashboardPage />,
+      },
+      {
+        path: 'clientes',
+        element: <ClientesPage />,
+      },
+      // Outras rotas protegidas virão aqui
+    ],
+  },
+  // Rota de fallback para 404 - opcional
+  {
+    path: '*',
+    element: <div>404 Not Found</div>,
   },
 ]);
 

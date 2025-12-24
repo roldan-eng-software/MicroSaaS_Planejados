@@ -22,23 +22,23 @@ Este documento serve como um guia de tarefas para o desenvolvimento do projeto, 
 
 ---
 
-### 🏃 **Fase 1: CRUD de Clientes (Em Andamento)**
+### ✅ **Fase 1: CRUD de Clientes (Concluído)**
 
-- [ ] **Backend:**
-    - [ ] Criar/Revisar schemas Pydantic para Cliente (`ClienteCreate`, `ClienteUpdate`, `ClienteRead`).
-    - [ ] Implementar `cliente_repo.py` com as queries (Create, Read, Update, Delete) filtrando por `tenant_id`.
-    - [ ] Implementar `cliente_service.py` com a lógica de negócio para o CRUD de clientes.
-    - [ ] Implementar os endpoints (`POST`, `GET`, `PUT`, `DELETE`) em `routes/clientes.py`.
+- [x] **Backend:**
+    - [x] Criar/Revisar schemas Pydantic para Cliente (`ClienteCreate`, `ClienteUpdate`, `ClienteRead`).
+    - [x] Implementar `cliente_repo.py` com as queries (Create, Read, Update, Delete) filtrando por `tenant_id`.
+    - [x] Implementar `cliente_service.py` com a lógica de negócio para o CRUD de clientes.
+    - [x] Implementar os endpoints (`POST`, `GET`, `PUT`, `DELETE`) em `routes/clientes.py`.
     - [ ] Escrever testes automatizados para a API de clientes.
-- [ ] **Frontend:**
-    - [ ] Criar o serviço `cliente.service.ts` para as chamadas de API.
-    - [ ] Criar o hook `useClientes.ts` com TanStack Query.
-    - [ ] Implementar o componente `ClienteList.tsx` (tabela, busca, paginação).
-    - [ ] Implementar o componente `ClienteForm.tsx` (criação e edição com validação).
-    - [ ] Criar as páginas `ClientesPage.tsx` e `ClienteDetailPage.tsx`.
-- [ ] **Integração:**
-    - [ ] Conectar UI do frontend com a API do backend para o fluxo completo de clientes.
-    - [ ] Testar manualmente o fluxo de ponta a ponta.
+- [x] **Frontend:**
+    - [x] Criar o serviço `cliente.service.ts` para as chamadas de API.
+    - [x] Criar o hook `useClientes.ts` com TanStack Query.
+    - [x] Implementar o componente `ClienteList.tsx` (tabela, busca, paginação).
+    - [x] Implementar o componente `ClienteForm.tsx` (criação e edição com validação).
+    - [x] Criar as páginas `ClientesPage.tsx` e `ClienteDetailPage.tsx`.
+- [x] **Integração:**
+    - [x] Conectar UI do frontend com a API do backend para o fluxo completo de clientes.
+    - [x] Testar manualmente o fluxo de ponta a ponta.
 
 ---
 
