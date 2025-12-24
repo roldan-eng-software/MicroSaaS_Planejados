@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titulo_documento }} #{{ pedido.numero }}</title>
+    <style>
+        @page { margin: 2cm; }
+        body { font-family: Helvetica, Arial, sans-serif; font-size: 12px; color: #333; line-height: 1.5; }
+        
+        .header { margin-bottom: 40px; border-bottom: 2px solid #2563eb; padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: #2563eb; text-transform: uppercase; }
+        .meta { text-align: right; font-size: 10px; color: #666; }
+
+        .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .box { width: 48%; }
+        .box-title { font-weight: bold; text-transform: uppercase; font-size: 10px; color: #666; border-bottom: 1px solid #eee; margin-bottom: 5px; padding-bottom: 2px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th { text-align: left; background-color: #f8fafc; padding: 10px; border-bottom: 2px solid #e2e8f0; font-weight: bold; font-size: 11px; text-transform: uppercase; }
+        td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+        .text-right { text-align: right; }
+        
+        .totals { width: 100%; display: flex; justify-content: flex-end; }
+        .totals-box { width: 250px; }
+        .total-row { display: flex; justify-content: space-between; padding: 5px 0; }
+        .total-final { font-weight: bold; font-size: 14px; border-top: 2px solid #333; margin-top: 5px; padding-top: 5px; }
+
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 9px; color: #999; border-top: 1px solid #eee; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">{{ titulo_documento }}</div>
+        <div class="meta">
+            Nº: <strong>{{ pedido.numero }}</strong><br>
+            Data: {{ data_geracao }}
+        </div>
+    </div>
+
+    <div class="info-section">
+        <div class="box">
+            <div class="box-title">Cliente</div>
+            <div><strong>{{ pedido.cliente.nome }}</strong></div>
+            <div>{{ pedido.cliente.email or '' }}</div>
+            <div>{{ pedido.cliente.telefone_ddd or '' }}</div>
+            <div>{{ pedido.cliente.endereco or '' }}</div>
+        </div>
+        <div class="box">
+            <div class="box-title">Detalhes</div>
+            <div>Status: {{ pedido.status }}</div>
+            <div>Prazo de Execução: {{ pedido.prazo_execucao_dias }} dias</div>
+            <div>Validade: {{ pedido.validade_orcamento_dias }} dias</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 40%">Item / Serviço</th>
+                <th style="width: 30%">Descrição</th>
+                <th class="text-right" style="width: 15%">Qtd</th>
+                <th class="text-right" style="width: 15%">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in pedido.itens %}
+            <tr>
+                <td>
+                    <strong>{{ item.titulo or 'Item' }}</strong>
+                </td>
+                <td>{{ item.descricao or '-' }}</td>
+                <td class="text-right">1</td>
+                <td class="text-right">{{ item.valor | default(0) | moeda }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" style="text-align: center; color: #999;">Nenhum item registrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="totals">
+        <div class="totals-box">
+            <div class="total-row">
+                <span>Subtotal:</span>
+                <span>{{ pedido.valor_subtotal | default(0) | moeda }}</span>
+            </div>
+            <div class="total-row">
+                <span>Desconto:</span>
+                <span>- {{ pedido.valor_desconto | default(0) | moeda }}</span>
+            </div>
+            <div class="total-row total-final">
+                <span>Total:</span>
+                <span>{{ pedido.valor_total | default(0) | moeda }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Documento gerado eletronicamente pelo sistema MicroSaaS Marcenaria.
+    </div>
+</body>
+</html>

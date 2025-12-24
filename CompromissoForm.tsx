@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useCriarCompromisso } from '../../hooks/useCompromissos';
-import { CompromissoCreate } from '../../types/compromisso';
+import { useCriarCompromisso, useAtualizarCompromisso } from '../../hooks/useCompromissos';
+import { CompromissoCreate, CompromissoRead, CompromissoUpdate } from '../../types/compromisso';
 
 const schema = z.object({
   titulo: z.string().min(3, 'Título deve ter no mínimo 3 caracteres'),
@@ -27,31 +27,57 @@ type FormData = z.infer<typeof schema>;
 interface Props {
   onSuccess?: () => void;
   onCancel?: () => void;
+  compromisso?: CompromissoRead;
 }
 
-export function CompromissoForm({ onSuccess, onCancel }: Props) {
+export function CompromissoForm({ onSuccess, onCancel, compromisso }: Props) {
+  // Função auxiliar para formatar data ISO para datetime-local (YYYY-MM-DDThh:mm)
+  const formatDateForInput = (isoString: string) => {
+    const date = new Date(isoString);
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
+  };
+
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-        status: 'Agendado',
-        tipo: 'Visita'
+        titulo: compromisso?.titulo || '',
+        descricao: compromisso?.descricao || '',
+        tipo: compromisso?.tipo || 'Visita',
+        status: compromisso?.status || 'Agendado',
+        data_hora_inicio: compromisso ? formatDateForInput(compromisso.data_hora_inicio) : '',
+        data_hora_fim: compromisso ? formatDateForInput(compromisso.data_hora_fim) : '',
+        local: compromisso?.local || '',
+        endereco: compromisso?.endereco || '',
+        observacoes: compromisso?.observacoes || '',
     }
   });
   
-  const { mutate: criarCompromisso, isPending } = useCriarCompromisso();
+  const { mutate: criarCompromisso, isPending: isCreating } = useCriarCompromisso();
+  const { mutate: atualizarCompromisso, isPending: isUpdating } = useAtualizarCompromisso();
+
+  const isPending = isCreating || isUpdating;
 
   const onSubmit = (data: FormData) => {
-    const payload: CompromissoCreate = {
+    const payload: CompromissoCreate | CompromissoUpdate = {
         ...data,
         data_hora_inicio: new Date(data.data_hora_inicio).toISOString(),
         data_hora_fim: new Date(data.data_hora_fim).toISOString(),
     };
 
-    criarCompromisso(payload, {
-      onSuccess: () => {
-        if (onSuccess) onSuccess();
-      },
-    });
+    if (compromisso) {
+        atualizarCompromisso({ id: compromisso.id, data: payload }, {
+            onSuccess: () => {
+                if (onSuccess) onSuccess();
+            }
+        });
+    } else {
+        criarCompromisso(payload as CompromissoCreate, {
+          onSuccess: () => {
+            if (onSuccess) onSuccess();
+          },
+        });
+    }
   };
 
   return (
@@ -145,7 +171,7 @@ export function CompromissoForm({ onSuccess, onCancel }: Props) {
           disabled={isPending}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
         >
-          {isPending ? 'Salvando...' : 'Salvar Compromisso'}
+          {isPending ? 'Salvando...' : (compromisso ? 'Atualizar' : 'Agendar')}
         </button>
       </div>
     </form>

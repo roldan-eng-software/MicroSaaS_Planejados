@@ -9,6 +9,7 @@ import { startOfMonth, endOfMonth } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import { useCompromissosPorPeriodo } from '../../hooks/useCompromissos';
+import { CompromissoRead } from '../../types/compromisso';
 
 const locales = {
   'pt-BR': ptBR,
@@ -22,7 +23,11 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-export function AgendaCalendar() {
+interface AgendaCalendarProps {
+    onSelectCompromisso?: (compromisso: CompromissoRead) => void;
+}
+
+export function AgendaCalendar({ onSelectCompromisso }: AgendaCalendarProps) {
   const [view, setView] = useState<View>(Views.MONTH);
   const [date, setDate] = useState(new Date());
 
@@ -84,8 +89,9 @@ export function AgendaCalendar() {
         onNavigate={onNavigate}
         onView={onView}
         onSelectEvent={(event) => {
-            console.log('Compromisso selecionado:', event.resource);
-            // Futuro: Abrir modal de edição
+            if (onSelectCompromisso) {
+                onSelectCompromisso(event.resource);
+            }
         }}
       />
     </div>

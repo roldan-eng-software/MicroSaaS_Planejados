@@ -90,11 +90,11 @@ Este documento serve como um guia de tarefas para o desenvolvimento do projeto, 
 ### 🚀 **Fase 5: Funcionalidades Avançadas**
 
 - [ ] **Backend:**
-    - [ ] Configurar `Celery` e `Redis` para tarefas assíncronas.
-    - [ ] Implementar serviço de geração de PDFs (`weasyprint`) para orçamentos e pedidos.
-    - [ ] Implementar serviço de notificações por e-mail (`sendgrid`).
+    - [x] Configurar `Celery` e `Redis` para tarefas assíncronas.
+    - [x] Implementar serviço de geração de PDFs (`weasyprint`) para orçamentos e pedidos.
+    - [x] Implementar serviço de notificações por e-mail (`sendgrid`).
 - [ ] **Frontend:**
-    - [ ] Adicionar botões para "Download PDF" e "Enviar por Email" nas páginas relevantes.
+    - [x] Adicionar botões para "Download PDF" e "Enviar por Email" nas páginas relevantes.
 
 ---
 
