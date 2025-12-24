@@ -111,3 +111,7 @@ Este documento serve como um guia de tarefas para o desenvolvimento do projeto, 
     - [x] Fazer um teste de penetração básico (Validado).
     - [x] Implementar Rate Limiting (proteção contra força bruta).
     - [x] Implementar Middleware de Headers de Segurança.
+
+### 📚 **Fase Final: Documentação e Entrega**
+
+- [x] Criar `README.md` com instruções de instalação e visão geral.
