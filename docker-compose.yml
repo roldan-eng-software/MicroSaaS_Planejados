@@ -13,6 +13,8 @@ services:
       DATABASE_URL: postgresql+psycopg://app_user:app_password@db:5432/app_db
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
+      PYTHONPATH: /app
+    working_dir: /app
     volumes:
       - ./backend:/app
     command: sh -c "alembic upgrade head || echo 'Primeira execução, sem migrations' && uvicorn app.main:app --host 0.0.0.0 --port 8000"
@@ -34,6 +36,7 @@ services:
     environment:
       # API do backend acessível pelo browser
       VITE_API_URL: "http://localhost:8000/api"
+    working_dir: /app
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -83,7 +86,11 @@ services:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
       DATABASE_URL: postgresql+psycopg://app_user:app_password@db:5432/app_db
-    command: celery -A app.core.celery_app.celery_app worker --loglevel=info
+      PYTHONPATH: /app
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: python -m celery -A app.core.celery_app.celery_app worker --loglevel=info
     depends_on:
       - backend
       - redis

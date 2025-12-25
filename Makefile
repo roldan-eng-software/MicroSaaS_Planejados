@@ -1,4 +1,3 @@
-.PHONY: help run stop down logs test seed reset-db shell deploy-local
 .PHONY: help run stop down logs test seed reset-db shell deploy-local backup
 
 help:
@@ -15,35 +14,35 @@ help:
 	@echo "  make backup       - Realiza backup do banco de dados para a pasta backups/"
 
 run:
-	docker-compose up --build -d
+	docker compose up --build -d
 	@echo "🚀 Aplicação iniciada!"
 	@echo "   Backend (Docs): http://localhost:8000/docs"
 	@echo "   Frontend:       http://localhost:5173"
 
 stop:
-	docker-compose stop
+	docker compose stop
 
 down:
-	docker-compose down
+	docker compose down
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 test:
-	docker-compose exec backend pytest tests/
+	docker compose exec backend pytest tests/
 
 seed:
-	docker-compose exec backend python seed.py
+	docker compose exec backend python seed.py
 
 reset-db:
-	docker-compose down -v
+	docker compose down -v
 	@echo "🗑️  Volume do banco de dados removido. Execute 'make run' para subir novamente."
 
 shell:
-	docker-compose exec backend bash
+	docker compose exec backend bash
 
 deploy-local:
-	docker-compose -f docker-compose.prod.yml up --build
+	docker compose -f docker-compose.prod.yml up --build
 
 backup:
 	@bash scripts/backup.sh
